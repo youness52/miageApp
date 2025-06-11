@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     try {
-      const response = await fetch('http://miage.myartsonline.com/api/login', {
+      const response = await fetch('https://miage.myartsonline.com/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ school_id: schoolId, dob: formatDate(dob) }),
