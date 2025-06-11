@@ -17,7 +17,7 @@ export default function App() {
   useEffect(() => {
     const checkLogin = async () => {
       const student = await AsyncStorage.getItem('student');
-      setInitialRoute(student ? 'Home' : 'PostsScreen');
+      setInitialRoute(student ? 'Home' : 'Login');
     };
     checkLogin();
   }, []);
