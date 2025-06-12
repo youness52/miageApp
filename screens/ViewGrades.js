@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
+const API_URL = Constants.expoConfig.extra.apiUrl+"api/grades.php";
 
 export default function ViewGrades() {
   const [grades, setGrades] = useState([]);
@@ -23,7 +25,7 @@ export default function ViewGrades() {
       const studentData = JSON.parse(storedStudent);
       setStudent(studentData);
 
-      const response = await fetch(`https://65ee-41-140-76-108.ngrok-free.app/miage/api/grades.php?student_id=${studentData.id}`);
+      const response = await fetch(`${API_URL}?student_id=${studentData.id}`);
       const result = await response.json();
 
       if (response.ok && result.success) {

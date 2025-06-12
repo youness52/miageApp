@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Linking, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const API_URL = 'https://65ee-41-140-76-108.ngrok-free.app/miage/api/projects.php';
+import Constants from 'expo-constants';
+const API_URL = Constants.expoConfig.extra.apiUrl;
+
 
 export default function VoirProject() {
   const [projects, setProjects] = useState([]);
@@ -17,7 +19,7 @@ export default function VoirProject() {
     setLoading(true);
     try {
       const params = new URLSearchParams({ name: filterName });
-      const res = await fetch(`${API_URL}?${params}`, { credentials: 'include' });
+      const res = await fetch(`${API_URL}api/projects.php?${params}`, { credentials: 'include' });
       const json = await res.json();
       setProjects(json.success ? json.projects : []);
     } catch {
@@ -50,7 +52,7 @@ export default function VoirProject() {
 
   const openFile = (file) => {
     if (!file) return;
-    Linking.openURL(`https://65ee-41-140-76-108.ngrok-free.app/miage/uploads/${encodeURIComponent(file)}`).catch(() => {});
+    Linking.openURL(`${API_URL}uploads/${encodeURIComponent(file)}`).catch(() => {});
   };
 
   const renderProject = ({ item }) => {

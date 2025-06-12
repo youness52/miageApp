@@ -5,6 +5,9 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
+const API_URL = Constants.expoConfig.extra.apiUrl+"api/login.php";
+
 
 export default function LoginScreen({ navigation }) {
   const [schoolId, setSchoolId] = useState('');
@@ -33,7 +36,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     try {
-      const response = await fetch('https://65ee-41-140-76-108.ngrok-free.app/miage/api/login.php', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ school_id: schoolId, dob: formatDate(dob) }),
