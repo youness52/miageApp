@@ -7,7 +7,8 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ViewGrades from './screens/ViewGrades';
 import VoirProject from './screens/VoirProject';
-import PostsScreen from './screens/PostsScreen';
+import AbScreen from './screens/AbScreen';
+import UploadProjects from './screens/UploadProjects';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,10 +29,11 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Notes" component={ViewGrades} />
         <Stack.Screen name="Projets" component={VoirProject} />
-          <Stack.Screen name="PostsScreen" component={PostsScreen} />
+        <Stack.Screen name="AbScreen" component={AbScreen} />
+        <Stack.Screen name="UploadProjects" component={UploadProjects} />
       </Stack.Navigator>
     </NavigationContainer>
   );

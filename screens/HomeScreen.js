@@ -27,7 +27,7 @@ export default function HomeScreen({ navigation, route }) {
       </View>
     );
   }
-console.log('Loaded student:', student);
+//console.log('Loaded student:', student);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -45,7 +45,7 @@ console.log('Loaded student:', student);
         </View>
 
         <View style={styles.buttonGroup}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('UploadProject')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('UploadProjects')}>
             <Text style={styles.buttonText}>📤 Déposer un Projet</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Projets')}>
@@ -54,7 +54,7 @@ console.log('Loaded student:', student);
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Notes')}>
             <Text style={styles.buttonText}>📊 Voir les Notes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PostsScreen')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AbScreen')}>
             <Text style={styles.buttonText}>📆 Voir les Absences</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={logout}>
