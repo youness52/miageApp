@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Linking, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const API_URL = 'http://miage.myartsonline.com/api/projects';
+const API_URL = 'https://65ee-41-140-76-108.ngrok-free.app/miage/api/projects.php';
 
 export default function VoirProject() {
   const [projects, setProjects] = useState([]);
@@ -50,7 +50,7 @@ export default function VoirProject() {
 
   const openFile = (file) => {
     if (!file) return;
-    Linking.openURL(`http://miage.myartsonline.com/uploads/${encodeURIComponent(file)}`).catch(() => {});
+    Linking.openURL(`https://65ee-41-140-76-108.ngrok-free.app/miage/uploads/${encodeURIComponent(file)}`).catch(() => {});
   };
 
   const renderProject = ({ item }) => {

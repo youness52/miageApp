@@ -23,7 +23,7 @@ export default function ViewGrades() {
       const studentData = JSON.parse(storedStudent);
       setStudent(studentData);
 
-      const response = await fetch(`http://miage.myartsonline.com/api/grades?student_id=${studentData.id}`);
+      const response = await fetch(`https://65ee-41-140-76-108.ngrok-free.app/miage/api/grades.php?student_id=${studentData.id}`);
       const result = await response.json();
 
       if (response.ok && result.success) {
