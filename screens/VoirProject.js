@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Linking, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+  Linking,
+  TextInput
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
 import Constants from 'expo-constants';
-const API_URL = Constants.expoConfig.extra.apiUrl;
 
+const API_URL = Constants.expoConfig.extra.apiUrl;
 
 export default function VoirProject() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterName, setFilterName] = useState('');
   const [expandedIds, setExpandedIds] = useState(new Set());
-
-  // Debounce timer id
   const [debounceTimer, setDebounceTimer] = useState(null);
 
   const fetchProjects = async () => {
@@ -28,19 +34,14 @@ export default function VoirProject() {
     setLoading(false);
   };
 
-  // Fetch on mount
   useEffect(() => { fetchProjects(); }, []);
 
-  // Debounced effect on filterName change
   useEffect(() => {
     if (debounceTimer) clearTimeout(debounceTimer);
-    // wait 500ms after user stops typing to fetch
     const timer = setTimeout(() => {
       fetchProjects();
     }, 500);
     setDebounceTimer(timer);
-
-    // Cleanup on unmount or before next effect
     return () => clearTimeout(timer);
   }, [filterName]);
 
@@ -57,44 +58,55 @@ export default function VoirProject() {
 
   const renderProject = ({ item }) => {
     const expanded = expandedIds.has(item.id);
-    const desc = expanded ? item.description : (item.description?.slice(0, 150) + (item.description.length > 150 ? '...' : ''));
+
     return (
-      <View style={styles.card}>
-        <Text style={styles.title}>{item.project_name}</Text>
-        <Text><Text style={styles.bold}>Étudiant:</Text> {item.student_name} ({item.class})</Text>
-        <Text><Text style={styles.bold}>Type:</Text> {item.project_type}</Text>
-        <Text style={styles.desc} onPress={() => item.description && toggleDesc(item.id)}>
-          {desc} {item.description?.length > 150 && <Text style={styles.readMore}>{expanded ? ' Lire moins' : ' Lire plus'}</Text>}
-        </Text>
-        <View style={styles.btnRow}>
-          <TouchableOpacity style={[styles.btn, item.report_pdf ? styles.primary : styles.disabled]} disabled={!item.report_pdf} onPress={() => openFile(item.report_pdf)}>
-            <Icon name="file-pdf" size={20} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.btn, item.presentation_ppt ? styles.warning : styles.disabled]} disabled={!item.presentation_ppt} onPress={() => openFile(item.presentation_ppt)}>
-            <Icon name="file-powerpoint" size={20} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.btn, item.source_rar ? styles.danger : styles.disabled]} disabled={!item.source_rar} onPress={() => openFile(item.source_rar)}>
-            <Icon name="file-archive" size={20} color="#fff" />
-          </TouchableOpacity>
+      <TouchableOpacity onPress={() => toggleDesc(item.id)} activeOpacity={0.9}>
+        <View style={styles.card}>
+          <Text style={styles.title}>{item.project_name}</Text>
+
+          {expanded && (
+            <>
+              <Text style={styles.detail}><Text style={styles.label}>Étudiant:</Text> {item.student_name} ({item.class})</Text>
+              <Text style={styles.detail}><Text style={styles.label}>Type:</Text> {item.project_type}</Text>
+              {item.description ? <Text style={styles.desc}>{item.description}</Text> : null}
+
+              <View style={styles.btnRow}>
+                <TouchableOpacity style={[styles.btn, item.report_pdf ? styles.primary : styles.disabled]} disabled={!item.report_pdf} onPress={() => openFile(item.report_pdf)}>
+                  <Icon name="file-pdf" size={20} color="#fff" />
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.btn, item.presentation_ppt ? styles.warning : styles.disabled]} disabled={!item.presentation_ppt} onPress={() => openFile(item.presentation_ppt)}>
+                  <Icon name="file-powerpoint" size={20} color="#fff" />
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.btn, item.source_rar ? styles.danger : styles.disabled]} disabled={!item.source_rar} onPress={() => openFile(item.source_rar)}>
+                  <Icon name="file-archive" size={20} color="#fff" />
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.date}>Date: {item.upload_date}</Text>
+            </>
+          )}
         </View>
-        <Text style={styles.date}>Date: {item.upload_date}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
-    
       <TextInput
-        placeholder="Nom d'étudiant"
+        placeholder="Rechercher ex: Gestion stock"
         style={styles.input}
         value={filterName}
         onChangeText={setFilterName}
       />
       {loading ? (
-        <ActivityIndicator size="large" color="#2a6efc" style={{ marginTop: 20 }} />
+        <ActivityIndicator size="large" color="#2563eb" style={{ marginTop: 20 }} />
       ) : projects.length ? (
-        <FlatList data={projects} keyExtractor={p => p.id.toString()} renderItem={renderProject} contentContainerStyle={{ paddingBottom: 40 }} />
+        <FlatList
+          data={projects}
+          keyExtractor={(p) => p.id.toString()}
+          renderItem={renderProject}
+          contentContainerStyle={{ paddingBottom: 40 }}
+        />
       ) : (
         <Text style={styles.noData}>Aucun projet trouvé.</Text>
       )}
@@ -105,59 +117,59 @@ export default function VoirProject() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#e5e9f0', // soft light background
+    padding: 10,
+    backgroundColor: '#f4f6f8',
   },
   input: {
     backgroundColor: '#fff',
-    marginBottom: 16,
-    padding: 14,
-    borderRadius: 12,
+    marginBottom: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 9,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#e0e0e0',
     fontSize: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 3,
+    elevation: 2,
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 20,
-    marginBottom: 18,
-    // iOS shadow
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    padding: 18,
+    margin: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.07,
     shadowRadius: 8,
-    // Android shadow
-    elevation: 6,
+    elevation: 4,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#1e2e54',
-    marginBottom: 8,
+    color: '#1e293b',
+    marginBottom: 6,
   },
-  bold: {
-    fontWeight: '700',
-    color: '#344562',
+  label: {
+    fontWeight: '600',
+    color: '#475569',
+  },
+  detail: {
+    fontSize: 15,
+    color: '#334155',
+    marginBottom: 6,
   },
   desc: {
-    color: '#555',
-    fontSize: 15,
-    lineHeight: 22,
-    marginVertical: 10,
-  },
-  readMore: {
-    color: '#3b82f6', // nicer blue
-    fontWeight: '700',
+    fontSize: 14,
+    color: '#4b5563',
+    lineHeight: 20,
+    marginBottom: 12,
   },
   btnRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent:"space-evenly" ,
     marginTop: 12,
+    padding:10,
+    backgroundColor: '#999',
+    borderRadius:10
   },
   btn: {
     width: 48,
@@ -165,30 +177,31 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#3b82f6',
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 3 },
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
     elevation: 4,
   },
   primary: {
-    backgroundColor: '#3b82f6', // blue
+    backgroundColor: '#2563eb', // Blue
   },
   warning: {
-    backgroundColor: '#fbbf24', // amber
+    backgroundColor: '#f59e0b', // Amber
   },
   danger: {
-    backgroundColor: '#ef4444', // red
+    backgroundColor: '#dc2626', // Red
   },
   disabled: {
-    backgroundColor: '#cbd5e1', // light gray
+    display:"none",
+    backgroundColor: '#d1d5db', // Gray
     shadowOpacity: 0,
     elevation: 0,
   },
   date: {
-    marginTop: 14,
+    marginTop: 12,
     fontSize: 13,
-    color: '#8b9cb5',
+    color: '#6b7280',
     fontStyle: 'italic',
     textAlign: 'right',
   },
@@ -196,8 +209,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     textAlign: 'center',
     fontStyle: 'italic',
-    color: '#a0aec0',
+    color: '#9ca3af',
     fontSize: 17,
   },
 });
-

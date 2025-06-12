@@ -110,7 +110,7 @@ export default function ViewGrades() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    padding: 10,
     backgroundColor: '#f4f4f4',
   },
   centered: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   table: {
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 0,
     paddingVertical: 8,
     elevation: 3,
     shadowColor: '#000',
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: 'row',
     backgroundColor: '#007bff',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     paddingVertical: 10,
   },
   dataRow: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6f0ff',
   },
   cell: {
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'center',
     color: '#333',
   },
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     paddingTop: 6,
   },
   detail: {
-    fontSize: 13,
+    fontSize: 11,
     marginVertical: 2,
     color: '#222',
   },
