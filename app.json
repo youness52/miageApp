@@ -28,7 +28,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-       "apiUrl": "https://65ee-41-140-76-108.ngrok-free.app/miage/",
+       "apiUrl": "https://192.168.15.53/miage/",
       "eas": {
         "projectId": "95812792-17d3-4a12-94a2-7edbf890faf1"
       }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StatusBar } from 'react-native'; // 👈 Add this
+import { StatusBar } from 'react-native'; 
 
 
 import LoginScreen from './screens/LoginScreen';
