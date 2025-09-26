@@ -20,7 +20,8 @@ export default function HomeScreen({ navigation, route }) {
     navigation.replace('Login');
   };
 
-  if (!student) {
+  //if (!student) {
+    if (student) {
     return (
       <View style={styles.container}>
         <Text>Chargement des données...</Text>
@@ -36,12 +37,12 @@ export default function HomeScreen({ navigation, route }) {
           source={{ uri: 'https://images2.imgbox.com/21/4c/VzXqdwi7_o.png' }}
           style={styles.avatar}
         />
-        <Text style={styles.name}>{student.name}</Text>
+        <Text style={styles.name}>{student?.name || 'Demo etudiant'}</Text>
 
         <View style={styles.infoBox}>
-          <Text style={styles.info}><Text style={styles.label}>ID Scolaire:</Text> {student.school_id}</Text>
-          <Text style={styles.info}><Text style={styles.label}>Date de Naissance:</Text> {student.date_of_birth}</Text>
-          <Text style={styles.info}><Text style={styles.label}>Classe:</Text> {student.class}</Text>
+          <Text style={styles.info}><Text style={styles.label}>ID Scolaire:</Text> {student?.school_id|| 'ID etudiant'}</Text>
+          <Text style={styles.info}><Text style={styles.label}>Date de Naissance:</Text> {student?.date_of_birth|| 'Demo DN'}</Text>
+          <Text style={styles.info}><Text style={styles.label}>Classe:</Text> {student?.class|| 'Demo classe'}</Text>
         </View>
 
         <View style={styles.buttonGroup}>

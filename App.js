@@ -31,7 +31,7 @@ export default function App() {
       <>
     <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRoute}>
+        <Stack.Navigator initialRouteName={"Home"}>
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Notes" component={ViewGrades} />
