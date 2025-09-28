@@ -22,13 +22,14 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.younessz.MIAGE",
-      "usesCleartextTraffic": true
+      "usesCleartextTraffic": true,
+      "networkSecurityConfig": "./network_security_config.xml"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-       "apiUrl": "http://192.168.15.53/",
+       "apiUrl": "http://192.168.11.112/miage/",
       "eas": {
         "projectId": "95812792-17d3-4a12-94a2-7edbf890faf1"
       }
