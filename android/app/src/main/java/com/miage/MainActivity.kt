@@ -1,4 +1,4 @@
-package com.miage
+package com.younessz.MIAGE
 
 import android.os.Build
 import android.os.Bundle
