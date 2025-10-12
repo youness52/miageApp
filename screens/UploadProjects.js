@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, BackHandler, Linking, StyleSheet, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const initialUrl = 'https://miageksar.ct.ws/';
+const initialUrl = 'http://192.168.15.53/';
 
 export default function UploadProjects() {
   const webViewRef = useRef(null);

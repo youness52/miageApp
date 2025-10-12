@@ -37,7 +37,7 @@ export default function App() {
           <Stack.Screen name="Notes" component={ViewGrades} />
           <Stack.Screen name="Projets" component={VoirProject} />
           <Stack.Screen name="AbScreen" component={AbScreen} />
-          <Stack.Screen name="UploadProjects" component={UploadProjects} options={{ headerShown: false }} />
+          <Stack.Screen name="options"={UploadProjects} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
