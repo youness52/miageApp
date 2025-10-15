@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, BackHandler, Linking, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, Button, BackHandler, Linking, StyleSheet, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const initialUrl = 'https://miageksar.ct.ws/';
+const initialUrl = 'http://192.168.15.53/';
 
 export default function UploadProjects() {
   const webViewRef = useRef(null);
   const [canGoBack, setCanGoBack] = useState(false);
+  const [error, setError] = useState(false);
+  const [key, setKey] = useState(0); // to reload WebView
 
   const handleShouldStartLoad = (request) => {
     const url = request.url;
-    if (url.startsWith(initialUrl)) {
-      return true;
-    }
+    if (url.startsWith(initialUrl)) return true;
     Linking.openURL(url);
     return false;
   };
 
+  // Handle Android back button
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (canGoBack && webViewRef.current) {
@@ -29,28 +30,46 @@ export default function UploadProjects() {
     return () => backHandler.remove();
   }, [canGoBack]);
 
-  // Disable selection and zoom inside webview
+  // Disable only text selection
   const injectedJS = `
     const style = document.createElement('style');
-    style.innerHTML = '* { user-select: none; -webkit-user-select: none; -ms-user-select: none; touch-action: manipulation; }';
+    style.innerHTML = '* { user-select: none; -webkit-user-select: none; -ms-user-select: none; }';
     document.head.appendChild(style);
-    document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
-  
+    true;
   `;
+
+  // Refresh function
+  const handleRefresh = () => {
+    setError(false);
+    setKey(prev => prev + 1); // re-render WebView
+  };
+
+  // Show error screen if connection fails
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>❌ Erreur de chargement</Text>
+        <Text style={styles.errorDesc}>Vérifiez votre connexion Internet.</Text>
+        <Button title="🔄 Recharger la page" onPress={handleRefresh} color="#007bff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <WebView
+        key={key}
         ref={webViewRef}
         source={{ uri: initialUrl }}
         onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
         onShouldStartLoadWithRequest={handleShouldStartLoad}
-        style={styles.webview}
+        onError={() => setError(true)}
         injectedJavaScript={injectedJS}
-        scalesPageToFit={false} // disables zoom scaling
         javaScriptEnabled={true}
         domStorageEnabled={true}
+        style={styles.webview}
+        scalesPageToFit={true} // zoom enabled
       />
     </View>
   );
@@ -64,5 +83,24 @@ const styles = StyleSheet.create({
   },
   webview: {
     flex: 1,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#d9534f',
+    marginBottom: 8,
+  },
+  errorDesc: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 20,
+    textAlign: 'center',
   },
 });
