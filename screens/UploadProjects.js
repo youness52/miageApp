@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Button, BackHandler, Linking, StyleSheet, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const initialUrl = 'http://miage.ct.ws/';
+const initialUrl = 'https://miage.ct.ws/';
 
 export default function UploadProjects() {
   const webViewRef = useRef(null);
