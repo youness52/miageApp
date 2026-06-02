@@ -63,7 +63,7 @@ export default function UploadProjects() {
         ref={webViewRef}
         source={{ uri: initialUrl }}
         onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
-        onShouldStartLoadWithRequest={handleShouldStartLoad}
+      //  onShouldStartLoadWithRequest={handleShouldStartLoad}
         onError={() => setError(true)}
         injectedJavaScript={injectedJS}
         javaScriptEnabled={true}
